@@ -1,3 +1,4 @@
 *.ipynb_checkpoints/
 *.DS_Store
 /cs229/ps4/data
+/cs229/ps4/__pycache__
