@@ -20,7 +20,14 @@ class TwoLayerNet(object):
 
     The outputs of the second fully-connected layer are the scores for each class.
     """
-
+    
+    def ReLU(self, X):
+        return np.maximum(0, X)
+    
+    def softmax(self, X):
+        minus_max_X = (X.T - np.max(X, axis=1)).T
+        return (np.exp(minus_max_X).T / np.sum(np.exp(minus_max_X), axis=1)).T
+        
     def __init__(self, input_size, hidden_size, output_size, std=1e-4):
         """
         Initialize the model. Weights are initialized to small random values and
@@ -80,7 +87,13 @@ class TwoLayerNet(object):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        O1 = X.dot(W1) + b1
+        A1 = self.ReLU(O1) # ReLU operation
+        
+        O2 = A1.dot(W2) + b2
+        A2 = self.softmax(O2)
+        
+        scores = O2
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -98,7 +111,7 @@ class TwoLayerNet(object):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        loss = np.mean(-np.log(A2)[range(N), y]) + reg * (np.sum(np.square(W1)) + np.sum(np.square(W2)))
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -111,7 +124,31 @@ class TwoLayerNet(object):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        C = W2.shape[1]
+        
+#         exp_O2 = np.exp(O2)
+#         sum_exp_O2 = np.sum(exp_O2, axis=1)
+#         numerator = np.tile(exp_O2[range(N), y].reshape(-1, 1), (1, C))
+#         numerator[range(N), y] = numerator[range(N), y] - sum_exp_O2
+#         delta2 = (exp_O2.T / A2[range(N), y]).T * (numerator.T / (sum_exp_O2 ** 2)).T
+        
+        one_hot_y = np.zeros((N, C))
+        one_hot_y[range(N), y] = 1
+        delta2 = A2 - one_hot_y
+        
+        dW2 = ((delta2.T).dot(A1)).T / N
+        db2 = np.sum(delta2, axis=0) / N
+        
+        delta1 = (W2.dot(delta2.T)).T
+        delta1[O1 <= 0] = 0
+        
+        dW1 = ((delta1.T).dot(X)).T / N
+        db1 = np.sum(delta1, axis=0) / N
+        
+        grads['W1'] = dW1 + 2 * reg * W1
+        grads['b1'] = db1
+        grads['W2'] = dW2 + 2 * reg * W2
+        grads['b2'] = db2
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -156,8 +193,10 @@ class TwoLayerNet(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
-
+            idx = np.random.choice(range(num_train), batch_size)
+            X_batch = X[idx, :]
+            y_batch = y[idx]
+        
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
             # Compute loss and gradients using the current minibatch
@@ -172,7 +211,8 @@ class TwoLayerNet(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
+            for param_name in self.params:
+                self.params[param_name] -= learning_rate * grads[param_name]
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -218,7 +258,13 @@ class TwoLayerNet(object):
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        O1 = X.dot(self.params['W1']) + self.params['b1']
+        A1 = self.ReLU(O1)
+        
+        O2 = A1.dot(self.params['W2']) + self.params['b2']
+        A2 = self.softmax(O2)
+        
+        y_pred = np.argmax(A2, axis=1)
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
