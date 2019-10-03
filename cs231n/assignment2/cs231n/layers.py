@@ -371,7 +371,15 @@ def layernorm_forward(x, gamma, beta, ln_param):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    D = x.shape[1]
+    transpose_x = x.T
+    mu_B = np.sum(transpose_x, axis=0) / D
+    sigma_square_B = np.sum(np.square(transpose_x - mu_B), axis=0) / D
+    transpose_x_bar = (transpose_x - mu_B) / np.sqrt(sigma_square_B + eps)
+    y = gamma * transpose_x_bar.T + beta
+
+    out = y
+    cache = (transpose_x_bar, gamma, sigma_square_B, eps, mu_B, transpose_x)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -406,7 +414,20 @@ def layernorm_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    N, D = dout.shape
+    # Unpack the cache
+    transpose_x_bar, gamma, sigma_square_B, eps, mu_B, transpose_x = cache
+    dx_bar = (dout * gamma).T
+    dsigma_square_B = np.sum(dx_bar * (transpose_x - mu_B), axis=0)\
+        * (-1 / 2) * (sigma_square_B + eps)**(-3 / 2)
+    one_over_var = 1 / np.sqrt(sigma_square_B + eps)
+    dmu_B = np.sum(dx_bar * -one_over_var, axis=0)\
+        + dsigma_square_B * (-np.sum(transpose_x - mu_B, axis=0) * 2 / D)
+    dx = (dx_bar * one_over_var + dsigma_square_B * (2 * (transpose_x - mu_B) / D)
+          + dmu_B / D).T
+
+    dgamma = np.sum(dout * transpose_x_bar.T, axis=0)
+    dbeta = np.sum(dout, axis=0)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
