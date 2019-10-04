@@ -212,6 +212,11 @@ class FullyConnectedNet(object):
                 self.params['gamma' + str(idx + 1)] = np.ones((hidden_size,))
                 self.params['beta' + str(idx + 1)] = np.zeros((hidden_size,))
 
+            # Code for layer normalization
+            if self.normalization == 'layernorm':
+                self.params['gamma' + str(idx + 1)] = np.ones((hidden_size, ))
+                self.params['beta' + str(idx + 1)] = np.zeros((hidden_size, ))
+
             prev_size = hidden_size
 
         self.params['W' + str(self.num_layers)] = np.random.normal(0,
@@ -295,9 +300,23 @@ class FullyConnectedNet(object):
                     input_data, self.params['gamma' + str(i + 1)], self.params['beta' + str(i + 1)], self.bn_params[i])
                 input_data = outs[idx]
 
+            # Code for layer normalization
+            if self.normalization == 'layernorm':
+                idx = 'LN' + str(i + 1)
+                outs[idx], caches[idx] = layernorm_forward(
+                    input_data, self.params['gamma' + str(i + 1)], self.params['beta' + str(i + 1)], self.bn_params[i])
+                input_data = outs[idx]
+
             idx = 'A' + str(i + 1)
             outs[idx], caches[idx] = relu_forward(input_data)
             input_data = outs[idx]
+
+            # Code for dropout
+            if self.use_dropout:
+                idx = 'DO' + str(i + 1)
+                outs[idx], caches[idx] = dropout_forward(
+                    input_data, self.dropout_param)
+                input_data = outs[idx]
 
         # Last affine layer
         idx = 'O' + str(self.num_layers)
@@ -342,12 +361,23 @@ class FullyConnectedNet(object):
             np.square(self.params['W' + str(self.num_layers)]))
 
         for i in range(self.num_layers - 1, 0, -1):
+            # Code for dropout
+            if self.use_dropout:
+                dA = dropout_backward(dA, caches['DO' + str(i)])
+
             dO = relu_backward(dA, caches['A' + str(i)])
 
             # Code for batch normalizaton
             if self.normalization == 'batchnorm':
                 dO, dgamma, dbeta = batchnorm_backward_alt(
                     dO, caches['BN' + str(i)])
+                grads['gamma' + str(i)] = dgamma
+                grads['beta' + str(i)] = dbeta
+
+            # Code for layer normalization
+            if self.normalization == 'layernorm':
+                dO, dgamma, dbeta = layernorm_backward(
+                    dO, caches['LN' + str(i)])
                 grads['gamma' + str(i)] = dgamma
                 grads['beta' + str(i)] = dbeta
 
