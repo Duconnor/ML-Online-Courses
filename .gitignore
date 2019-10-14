@@ -2,3 +2,7 @@
 *.DS_Store
 /cs229/ps4/data
 /cs229/ps4/__pycache__
+cs231n/assignment3/cs231n/datasets/imagenet_val_25.npz
+cs231n/assignment3/cs231n/datasets/squeezenet.ckpt.data-00000-of-00001
+cs231n/assignment3/cs231n/datasets/squeezenet.ckpt.index
+cs231n/assignment3/cs231n/datasets/coco_captioning
