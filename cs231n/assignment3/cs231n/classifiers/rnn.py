@@ -148,8 +148,8 @@ class CaptioningRNN(object):
         h, rnn_cache = None, None
         if self.cell_type == 'rnn':
             h, rnn_cache = rnn_forward(word_vectors, h0, Wx, Wh, b)
-        elif self.cell_type == 'ltsm':
-            pass
+        elif self.cell_type == 'lstm':
+            h, rnn_cache = lstm_forward(word_vectors, h0, Wx, Wh, b)
 
         scores, temporal_affine_cache = temporal_affine_forward(
             h, W_vocab, b_vocab)
@@ -157,8 +157,14 @@ class CaptioningRNN(object):
 
         dh, grads['W_vocab'], grads['b_vocab'] = temporal_affine_backward(
             dscores, temporal_affine_cache)
-        dword_vectors, dh0, grads['Wx'], grads['Wh'], grads['b'] = rnn_backward(
-            dh, rnn_cache)
+        dword_vectors, dh0 = None, None
+        if self.cell_type == 'rnn':
+            dword_vectors, dh0, grads['Wx'], grads['Wh'], grads['b'] = rnn_backward(
+                dh, rnn_cache)
+        elif self.cell_type == 'lstm':
+            dword_vectors, dh0, grads['Wx'], grads['Wh'], grads['b'] = lstm_backward(
+                dh, rnn_cache
+            )
         grads['W_embed'] = word_embedding_backward(
             dword_vectors, word_embedding_cache)
         _, grads['W_proj'], grads['b_proj'] = affine_backward(
@@ -231,16 +237,23 @@ class CaptioningRNN(object):
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         h0, _ = affine_forward(features, W_proj, b_proj)
-        prev_word = self._start
+        N, _ = h0.shape
+        prev_word = (np.tile(self._start, N).reshape((N, 1))).astype(int)
         prev_h = h0
+        prev_c = np.zeros_like(h0)
+        h = None
         for seq_idx in range(max_length):
             word_vec, _ = word_embedding_forward(prev_word, W_embed)
-            h, _ = rnn_step_forward(word_vec, prev_h, Wx, Wh, b)
+            if self.cell_type == 'rnn':
+                h, _ = rnn_step_forward(word_vec[:, 0, :], prev_h, Wx, Wh, b)
+            elif self.cell_type == 'lstm':
+                h, prev_c, _ = lstm_step_forward(
+                    word_vec[:, 0, :], prev_h, prev_c, Wx, Wh, b)
             scores, _ = affine_forward(h, W_vocab, b_vocab)
             word = np.argmax(scores, axis=1)
             captions[:, seq_idx] = word
             prev_h = h
-            prev_word = word
+            prev_word = word.reshape((N, 1))
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################
