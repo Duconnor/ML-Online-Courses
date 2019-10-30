@@ -155,7 +155,7 @@ The pretrained vectors are better because:
     \includegraphics[width=0.7\linewidth]{../q4_reg_v_acc.png}
     \caption{Reg Value with respect to Dev and Train Acc}
 \end{figure}\par
-We can see from the above plot that different regularization value does not seem to affect the accuracy gap between train set and dev set much, this is because we haven't encountered overfitting yet.\par
+We can see from above that when regularization value is small, there is a huge gap between training accuracy and dev accuracy, meaning that we have encountered overfitting. As the regularization value increase, the gap becomes smaller, meaning that we have greatly reduced the overfitting. However, as the regularization value continues to increase, both the training accuracy and dev accuracy begin to fall, meaning that we may encounter underfitting.\par
 {\bf{(f)}} The plot is:
 \begin{figure}[H]
     \centering

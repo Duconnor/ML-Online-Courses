@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.10.11)  22 OCT 2019 16:46
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.10.11)  30 OCT 2019 10:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/duyx/Personal/CS/Coures/CS224n/assignments/assignment1/code/solutions/assignment_sol
-(/Users/duyx/Personal/CS/Coures/CS224n/assignments/assignment1/code/solutions/assignment_sol.tex
+**/Users/duyx/ML-Courses/cs224n/assignment1/code/solutions/assignment_sol
+(/Users/duyx/ML-Courses/cs224n/assignment1/code/solutions/assignment_sol.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/ctex/ctexart.cls (/usr/local/texlive/2018/texmf-dist/tex/latex/l3kernel/expl3.sty
@@ -1248,16 +1248,17 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 File: ../q4_reg_v_acc.png Graphic file (type bmp)
 <../q4_reg_v_acc.png>
+ [4]
 File: ../q4_dev_conf.png Graphic file (type bmp)
 <../q4_dev_conf.png>
- [4] [5] (./assignment_sol.aux) ) 
+ [5] (./assignment_sol.aux) ) 
 Here is how much of TeX's memory you used:
  17342 strings out of 492970
- 387718 string characters out of 6133937
+ 387658 string characters out of 6133937
  479143 words of memory out of 5000000
  21173 multiletter control sequences out of 15000+600000
  539899 words of font info for 72 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 53i,16n,74p,10533b,1142s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 53i,16n,74p,10513b,1142s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on assignment_sol.pdf (5 pages).
