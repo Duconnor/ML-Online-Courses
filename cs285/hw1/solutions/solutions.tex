@@ -1,0 +1,49 @@
+\documentclass[10pt, a4paper]{ctexart}
+\usepackage[margin=1in]{geometry}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+
+\renewcommand{\figurename}{Figure.}
+\renewcommand{\tablename}{Table.}
+
+\begin{document}
+\title{Assignment 1: Imitation Learning}
+\date{}
+\author{}
+\maketitle
+
+\section{Behavioral Cloning}
+{\bf{2.}}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+        \hline
+        \hline
+        Tasks&Eval Mean&Eval Std&Train Mean&Train Std\\
+        \hline
+        Ant&2496&235.8&4714&12.2\\
+        \hline
+        Humanoid&264.4&49.51&10345&20.98\\
+        \hline
+    \end{tabular}
+    \caption{Performance of Behavioral Cloning on Different Tasks}
+\end{table}
+{\bf{3.}}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/mean.png}
+    \caption{Mean}
+\end{figure}
+I choose the number of training steps per iteration because it is an important hyperparamter, which can significantly affect the performance.
+
+\section{DAgger}
+{\bf{2.}}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/dagger.png}
+    \caption{Performance of DAgger on Ant-v2 (Used Default Setting with Eval Batch Size=5000)}
+\end{figure}
+\end{document}

@@ -6,6 +6,9 @@
 \usepackage{float}
 \usepackage{listings}
 
+\renewcommand{\figurename}{Figure.}
+\renewcommand{\tablename}{Table.}
+
 \begin{document}
 \title{Assignment 2}
 \date{}
@@ -20,5 +23,39 @@
 {\bf({e})} See file q1\_classifier.py. After the model's {\emph{train\_op}} is called, the prediction {\emph{y\_hat}} is computed in the forward propagation and the gradient of loss with respect to {\emph{W}} and {\emph{b}} is computed during the back propagation. The variable {\emph{W}} and {\emph{b}} will be changed.\par
 
 \section{Neural Transition-Based Dependency Parsing}
-
+{\bf{(a)}} The parsing procedure is as follows:
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{29mm}{
+    \begin{tabular}{l|l|l|l}
+        stack&buffer&new dependency&transition\\
+        \hline
+        [ROOT]&[I, parsed, this, sentence, correctly]&&Initial Configuration\\\relax
+        [ROOT, I]&[parsed, this, sentence, correctly]&&SHIFT\\\relax
+        [ROOT, I, parsed]&[this, sentence, correctly]&&SHIFT\\\relax
+        [ROOT, parsed]&[this, sentence, correctly]&parsed$\rightarrow$I&LEFT-ARC\\\relax
+        [ROOT, parsed, this]&[sentence, correctly]&&SHIFT\\\relax
+        [ROOT, parsed, this, sentence]&[correctly]&&SHIFT\\\relax
+        [ROOT, parsed, sentence]&[correctly]&sentence$\rightarrow$this&LEFT-ARC\\\relax
+        [ROOT, parsed]&[correctly]&parsed$\rightarrow$sentence&RIGHT-ARC\\\relax
+        [ROOT, parsed, correctly]&[]&&SHIFT\\\relax
+        [ROOT, parsed]&[]&parsed$\rightarrow$correctly&RIGHT-ARC\\\relax
+        [ROOT]&[]&ROOT$\rightarrow$parsed&RIGHT-ARC\\
+    \end{tabular}
+    }
+    \caption{Parsing Procedure}
+\end{table}
+{\bf{(b)}} A sentence containing $n$ words will be parsed in $2\times n$ steps. This is true because every word will be shifted into the stack once, and will be removed from the stack once, therefore, the total number of steps is $2\times n$.\par
+{\bf{(c)}} See file q2\_parser\_transitions.py\par
+{\bf{(d)}} See file q2\_parser\_transitions.py\par
+{\bf{(e)}} See file q2\_initialization.py\par
+{\bf{(f)}} The constant $\gamma$ can be expressed as:
+\begin{align*}
+    \gamma = \frac{1}{1-p_{drop}}
+\end{align*}
+This is true because the expected value of $h_{drop}$ is $(1-p_{drop})h$.\par
+{\bf{(g)}}\par
+(i) By using $m$, the amount of steps we take at each update will now become the running average of gradients of all times. And the current gradient calculated only contribute a little to the $m$, therefore it is more stable and can stop the updates from varying too much.\par
+(ii) The parameters that have smaller gradient will get larger updates. This helps the learning because it will smooth the updates we make and try to update all parameters equally.\par
+{\bf{(h)}} See file q2\_parser\_model.py
 \end{document}

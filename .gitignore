@@ -13,3 +13,5 @@ cs231n/assignment3/cs231n/datasets/MNIST_data/
 cs285/hw1/cs285/data/
 cs285/hw1/downloads/
 cs285/hw1/cs285.egg-info/
+cs285/hw1/plot/
+cs285/hw1/run.sh

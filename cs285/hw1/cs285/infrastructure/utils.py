@@ -64,7 +64,7 @@ def sample_trajectories(env, policy, min_timesteps_per_batch, max_path_length, r
     """
     timesteps_this_batch = 0
     paths = []
-    # FIXME: min_timesteps_per_batch??
+
     while timesteps_this_batch < min_timesteps_per_batch:
         path = sample_trajectory(
             env, policy, max_path_length, render=render, render_mode=render_mode)
