@@ -282,11 +282,11 @@ class RL_Trainer(object):
                 self.logger.log_scalar(value, key, itr)
             print('Done logging...\n\n')
 
-            if itr == 0:
-                with open(self.params['env_name'] + '_train', 'w') as f:
-                    f.write(str(self.initial_return) + '\n')
-            with open(self.params['env_name'] + '_' + str(self.params['num_agent_train_steps_per_iter']), 'a') as f:
-                f.write(str(logs['Eval_AverageReturn']) + '\t')
-                f.write(str(logs['Eval_StdReturn']) + '\n')
+            # if itr == 0:
+            #     with open(self.params['env_name'] + '_train', 'w') as f:
+            #         f.write(str(self.initial_return) + '\n')
+            # with open(self.params['env_name'] + '_' + str(self.params['num_agent_train_steps_per_iter']), 'a') as f:
+            #     f.write(str(logs['Eval_AverageReturn']) + '\t')
+            #     f.write(str(logs['Eval_StdReturn']) + '\n')
 
             self.logger.flush()

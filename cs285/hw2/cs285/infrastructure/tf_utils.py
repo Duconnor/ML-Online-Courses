@@ -5,8 +5,20 @@ import tensorflow as tf
 
 
 def build_mlp(input_placeholder, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None):
-    
+
     # TODO: GETTHIS from HW1
+
+    output_placeholder = input_placeholder
+    with tf.variable_scope(scope):
+        for _ in range(n_layers):
+            # NOTE: TODO once was here
+            # HINT: use tf.layers.dense (specify <input>, <size>, activation=<?>)
+            output_placeholder = tf.layers.dense(
+                output_placeholder, size, activation=activation)
+        # HINT: use tf.layers.dense (specify <input>, <size>, activation=<?>)
+        output_placeholder = tf.layers.dense(
+            output_placeholder, output_size, activation=output_activation)
+    return output_placeholder
 
 
 ############################################
@@ -35,6 +47,7 @@ def create_tf_session(use_gpu, gpu_frac=0.6, allow_gpu_growth=True, which_gpu=0)
     # use config to create TF session
     sess = tf.Session(config=config)
     return sess
+
 
 def lrelu(x, leak=0.2):
     f1 = 0.5 * (1 + leak)

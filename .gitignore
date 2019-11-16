@@ -1,6 +1,8 @@
 *.ipynb_checkpoints/
 *.DS_Store
 *.vscode
+*.pyc
+*/__pycache__/
 /cs229/ps4/data
 /cs229/ps4/__pycache__
 cs231n/assignment3/cs231n/datasets/imagenet_val_25.npz
@@ -15,3 +17,7 @@ cs285/hw1/downloads/
 cs285/hw1/cs285.egg-info/
 cs285/hw1/plot/
 cs285/hw1/run.sh
+*/cs285.egg-info/
+cs285/hw2/plot/
+cs285/hw2/run.sh
+cs285/hw2/cs285/data/

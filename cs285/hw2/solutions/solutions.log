@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.10.11)  5 NOV 2019 17:14
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.10.11)  14 NOV 2019 20:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/duyx/ML-Courses/cs224n/assignment2/code/solutions/assignment_sol
-(/Users/duyx/ML-Courses/cs224n/assignment2/code/solutions/assignment_sol.tex
+**/Users/duyx/ML-Courses/cs285/hw2/solutions/solutions
+(/Users/duyx/ML-Courses/cs285/hw2/solutions/solutions.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/ctex/ctexart.cls (/usr/local/texlive/2018/texmf-dist/tex/latex/l3kernel/expl3.sty
@@ -1124,8 +1124,8 @@ Package: listings 2015/06/04 1.6 (Carsten Heinz)
 Package: xeCJK-listings 2018/04/07 v3.7.0 xeCJK patch file for listings
 \l__xeCJK_listings_max_char_int=\count288
 \l__xeCJK_listings_flag_int=\count289
-) (./assignment_sol.aux)
-\openout1 = `assignment_sol.aux'.
+) (./solutions.aux)
+\openout1 = `solutions.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
@@ -1238,16 +1238,20 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \c@lstlisting=\count290
+File: ../plot/pic/short_batch.png Graphic file (type bmp)
+<../plot/pic/short_batch.png>
+File: ../plot/pic/long_batch.png Graphic file (type bmp)
+<../plot/pic/long_batch.png>
 [1
 
-] [2] (./assignment_sol.aux) ) 
+] [2] (./solutions.aux) ) 
 Here is how much of TeX's memory you used:
- 17155 strings out of 492970
- 385332 string characters out of 6133937
- 455426 words of memory out of 5000000
- 21000 multiletter control sequences out of 15000+600000
- 539883 words of font info for 70 fonts, out of 8000000 for 9000
+ 17169 strings out of 492970
+ 385531 string characters out of 6133937
+ 501411 words of memory out of 5000000
+ 21008 multiletter control sequences out of 15000+600000
+ 539891 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 53i,10n,74p,10513b,253s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 53i,4n,74p,10494b,944s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on assignment_sol.pdf (2 pages).
+Output written on solutions.pdf (2 pages).

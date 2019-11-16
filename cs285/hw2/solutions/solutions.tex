@@ -1,0 +1,47 @@
+\documentclass[10pt, a4paper]{ctexart}
+\usepackage[margin=1in]{geometry}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+
+\renewcommand{\figurename}{Figure.}
+\renewcommand{\tablename}{Table.}
+
+\begin{document}
+\title{Assignment 2: Policy Gradients}
+\date{}
+\author{}
+\maketitle
+
+\section{Vanilla Policy Gradients}
+\subsection{The learning curves}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/pic/short_batch.png}
+    \caption{The learning curves of the small batch experiments}
+\end{figure}
+From Figure 1 we can see that in the short batch experiments, using reward-to-go and standardizing the advantages can improve the performance of the model.\par
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/pic/long_batch.png}
+    \caption{The learning curves of the long batch experiments}
+\end{figure}
+From Figure 2 we can see that in the long batch experiments, using reward-to-go helps reduce the variance of our model.
+\subsection{Questions}
+\begin{enumerate}
+    \item The one using reward-to-go has better performance without advantage-standardization.
+    \item Yes, advantage standardization helps reduce the variance, making the learning curves smoother.
+    \item Yes, small batch size leads to slow convergence.
+\end{enumerate}
+\subsection{Command line configuration}
+\begin{lstlisting}[breaklines=true,keywordstyle=\color{blue!90}\bfseries]
+python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 1000 -dsa --exp_name sb_no_rtg_dsa
+python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 1000 -rtg -dsa --exp_name sb_rtg_dsa
+python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 1000 -rtg --exp_name sb_rtg_na
+python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 5000 -dsa --exp_name lb_no_rtg_dsa
+python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 5000 -rtg - dsa --exp_name lb_rtg_dsa
+python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 5000 -rtg --exp_name lb_rtg_na
+\end{lstlisting}
+\end{document}
