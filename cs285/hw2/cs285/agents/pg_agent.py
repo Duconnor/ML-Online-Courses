@@ -122,9 +122,9 @@ class PGAgent(BaseAgent):
         # extra hint if you're stuck: see your actor's run_baseline_prediction
         # HINT2: advantage should be [Q-b]
         if self.nn_baseline:
-            b_n_unnormalized = TODO
+            b_n_unnormalized = self.actor.run_baseline_prediction(obs)
             b_n = b_n_unnormalized * np.std(q_values) + np.mean(q_values)
-            adv_n = TODO
+            adv_n = q_values - b_n
 
         # Else, just set the advantage to [Q]
         else:

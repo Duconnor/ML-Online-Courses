@@ -11,6 +11,8 @@ cs231n/assignment3/cs231n/datasets/squeezenet.ckpt.index
 cs231n/assignment3/cs231n/datasets/coco_captioning
 cs224n/assignment1/code/utils/datasets
 cs224n/assignment2/code/data/
+cs224n/assignment3/code/data
+cs224n/assignment3/code/results/
 cs231n/assignment3/cs231n/datasets/MNIST_data/
 cs285/hw1/cs285/data/
 cs285/hw1/downloads/

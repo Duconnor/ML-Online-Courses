@@ -17,13 +17,13 @@
 
 \section{Vanilla Policy Gradients}
 \subsection{The learning curves}
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\linewidth]{../plot/pic/short_batch.png}
     \caption{The learning curves of the small batch experiments}
 \end{figure}
 From Figure 1 we can see that in the short batch experiments, using reward-to-go and standardizing the advantages can improve the performance of the model.\par
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\linewidth]{../plot/pic/long_batch.png}
     \caption{The learning curves of the long batch experiments}
@@ -44,4 +44,24 @@ python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b
 python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 5000 -rtg - dsa --exp_name lb_rtg_dsa
 python cs285/scripts/run_hw2_policy_gradient.py --env_name CartPole-v0 -n 100 -b 5000 -rtg --exp_name lb_rtg_na
 \end{lstlisting}
+\section{Implementing Neural Network Baseline}
+\subsection{Lunar Lander}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/pic/lunarlander.png}
+    \caption{The learning curve in task "LunarLander"}
+\end{figure}
+\subsection{Half Cheetah}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/pic/halfcheetah.png}
+    \caption{The learning curve in task "HalfCheetah"}
+\end{figure}
+From the above figure we know that the higher the learning rate is, the higher average return will be. Also, the larger the batch size is, the higher average return will be.
+\subsection{Hafl Cheetah 2}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../plot/pic/halfcheetah_2.png}
+    \caption{The learning curve in task "HalfCheetah" using learning rate and batch size selected above}
+\end{figure}
 \end{document}
