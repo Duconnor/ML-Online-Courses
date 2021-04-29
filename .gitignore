@@ -23,3 +23,7 @@ cs285/hw1/run.sh
 cs285/hw2/plot/
 cs285/hw2/run.sh
 cs285/hw2/cs285/data/
+cs285/hw3/plot/
+cs285/hw3/cs285/data/
+cs285/hw3/run.sh
+cs285/hw3/cs285.egg-info/
