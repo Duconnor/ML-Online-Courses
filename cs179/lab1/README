@@ -1,0 +1,133 @@
+CS 179: GPU Computing
+Lab 1: Introduction to CUDA
+Name: duyx
+
+================================================================================
+Question 1: Common Errors (20 points)
+================================================================================
+
+--------------------------------------------------------------------------------
+1.1
+--------------------------------------------------------------------------------
+Issue: pointer can not point to a constant.
+
+Fix: we need to first malloc space for this pointer, then set it to 3 and then
+adds 2 to it.
+
+void test1() {
+    int *a = NULL;
+    a = (int*) malloc(sizeof(int));
+    if (a != NULL) {
+        *a = 3;
+        *a = *a + 2;
+        printf("%d\n", *a);
+        free(a);
+    }
+}
+
+--------------------------------------------------------------------------------
+1.2
+--------------------------------------------------------------------------------
+Issue: the way it declares a and b makes a an integer pointer while b an
+integer.
+
+Fix: change int *a, b; to int *a, *b;
+
+void test2() {
+    int *a, *b;
+    a = (int *) malloc(sizeof (int));
+    b = (int *) malloc(sizeof (int));
+
+    if (!(a && b)) {
+        printf("Out of memory\n");
+        exit(-1);
+    }
+    *a = 2;
+    *b = 3;
+}
+
+--------------------------------------------------------------------------------
+1.3
+--------------------------------------------------------------------------------
+Issue: the parameter of the malloc function is the number of bytes we want to
+allocate. Therefore, if we want to allocate an array of 1000 integers, we need
+to allocate a space of total 1000 * 4 bytes, not 1000 bytes.
+
+Fix: change to int i, *a = (int *) malloc(1000 * sizeof(int));
+
+void test3() {
+    int i, *a = (int *) malloc(1000 * sizeof(int));
+
+    if (!a) {
+        printf("Out of memory\n");
+        exit(-1);
+    }
+    for (i = 0; i < 1000; i++)
+        *(i + a) = i;
+}
+
+
+--------------------------------------------------------------------------------
+1.4
+--------------------------------------------------------------------------------
+Issue: for two-dimensional array, it can be viewed as a one-dimensional array of
+pointers. Currently we only allocate space for the one-dimensional array of
+pointers, but for each pointer in this array, we have not allocated space for
+them.
+
+Fix: add codes to allocate sapce for each pointer.
+
+void test4() {
+    int **a = (int **) malloc(3 * sizeof (int *));
+    for (int i = 0; i < 3; i++) {
+        a[i] = (int*)malloc(100 * sizeof(int *));
+    }
+    a[1][1] = 5;
+}
+
+--------------------------------------------------------------------------------
+1.5
+--------------------------------------------------------------------------------
+Issue: a is a pointer, so it will never be 0. Therefore the condition !a is
+always false.
+
+Fix: Change !a to !*a
+
+void test5() {
+    int *a = (int *) malloc(sizeof (int));
+    scanf("%d", a);
+    if (!*a)
+        printf("Value is 0\n");
+}
+
+================================================================================
+Question 2: Parallelization (30 points)
+================================================================================
+
+--------------------------------------------------------------------------------
+2.1
+--------------------------------------------------------------------------------
+
+The first one will have an easier and faster implementation on the GPU because
+the computation of y_1[n] is independent of the computation of other elements in
+y_1 so it can be computed in parallel. While for the second calculation, the
+computation of y_2[n] relies on the value of y_2[n - 2] and y_2[n - 1],
+therefore it has to be computed in sequence.
+
+--------------------------------------------------------------------------------
+2.2
+--------------------------------------------------------------------------------
+
+If we expand the recurrence definition of y[n], we have:
+    y[n] = c * x[n] + (1 - c) * (c * x[n - 1] + (1 - c) * y[n - 2])
+         = c * x[n] + (1 - c) * c * x[n - 1] + (1 - c) * (1 - c) * y[n - 2]
+
+Therefore, if 1 - c is close to 0, we can appropriate y[n] by:
+    y[n] = c * x[n] + (1 - c) * c * x[n - 1] + (1 - c)^2 * c * x[n - 2] + ...
+
+The above approximation of y[n] is now parallelizable because the computation of
+y[n] no longer depends on other values in y.
+
+================================================================================
+Question 3: Small-Kernel Convolution (50 points)
+================================================================================
